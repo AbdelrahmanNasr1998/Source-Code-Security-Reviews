@@ -150,13 +150,7 @@ grep -rin --color=auto "[a-zA-Z0-9._%+-]\+@[a-zA-Z0-9.-]\+\.[a-z]\{2,4\}" docs/
 grep -rin --color=auto "[0-9]\+" data/
 ```
 
-### 6. Show line numbers too
-
-```bash
-grep -rin --color=auto "warning" logs/
-```
-
-### 7. Search excluding `.git` folder
+### 6. Search excluding `.git` folder
 
 ```bash
 grep -rin --color=auto --exclude-dir=".git" "password" project/
