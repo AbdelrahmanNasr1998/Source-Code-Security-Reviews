@@ -103,7 +103,39 @@ DATABASES = {
 
 ---
 
-## 🔹 7. Notes
+## 🔹 7. Remote DB with SSL (Example: PostgreSQL)
+
+```python
+# settings.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mydatabase',                  # Database name
+        'USER': 'myuser',                      # DB username
+        'PASSWORD': 'mypassword',              # DB password
+        'HOST': 'db.example.com',              # Remote DB host
+        'PORT': '5432',                        # PostgreSQL default port
+        'OPTIONS': {
+            'sslmode': 'require',              # Enforce SSL connection
+            # 'sslrootcert': '/path/to/server-ca.pem',   # (optional) CA cert
+            # 'sslcert': '/path/to/client-cert.pem',     # (optional) Client cert
+            # 'sslkey': '/path/to/client-key.pem',       # (optional) Client key
+        },
+    }
+}
+```
+
+### 🔹 Explanation
+
+* **`HOST`** → Remote hostname or IP (`db.example.com`, `10.0.0.5`, etc.)
+* **`OPTIONS`** → SSL-related settings
+
+  * `sslmode: require` → forces encrypted connection
+  * `sslrootcert`, `sslcert`, `sslkey` → used if the DB server requires client-side certs
+
+---
+
+## 🔹 8. Notes
 
 * The database **engine** determines which backend Django will use:
 
