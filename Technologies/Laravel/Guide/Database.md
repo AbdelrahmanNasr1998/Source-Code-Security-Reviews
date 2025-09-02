@@ -131,4 +131,3 @@ php artisan migrate
     ]) : [],
 ],
 ```
-e, Laravel)?
