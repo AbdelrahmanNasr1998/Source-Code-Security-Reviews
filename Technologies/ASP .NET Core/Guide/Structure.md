@@ -159,3 +159,70 @@ View (Razor .cshtml) → renders HTML with model data
       ↓
 Response → sent back to User
 ```
+
+---
+
+## 6. 🏗️ **Compiled Output (Build Artifacts)**
+
+When you build the project (`dotnet build`), .NET generates compiled assemblies (`.dll` files) and supporting files.
+These live under the **`bin/`** and **`obj/`** folders.
+
+### 📂 **bin/** (Final compiled output)
+
+```
+ProjectName/
+│
+├── bin/
+│   ├── Debug/                 # Debug build (used during development)
+│   │   └── net6.0/            # Target framework (example: .NET 6)
+│   │       ├── ProjectName.dll         # Main project assembly
+│   │       ├── ProjectName.pdb         # Debug symbols (for breakpoints, stack traces)
+│   │       ├── ProjectName.deps.json   # Dependency manifest (what DLLs are needed)
+│   │       ├── ProjectName.runtimeconfig.json # Runtime config (framework version, GC settings, etc.)
+│   │       ├── ProjectName.Views.dll   # Precompiled Razor views
+│   │       ├── *.dll (NuGet deps)      # External dependencies (e.g., EFCore, Newtonsoft.Json)
+│   │       └── *.xml                   # XML docs if generated
+│   │
+│   └── Release/               # Release build (optimized, no debug info)
+│       └── net6.0/
+│           ├── ProjectName.dll
+│           ├── ProjectName.Views.dll
+│           ├── ProjectName.deps.json
+│           ├── ProjectName.runtimeconfig.json
+│           ├── *.dll (dependencies)
+│           └── (no *.pdb by default — unless generated explicitly)
+```
+
+---
+
+### 📂 **obj/** (Intermediate build files)
+
+```
+ProjectName/
+│
+├── obj/
+│   ├── Debug/net6.0/
+│   │   ├── ProjectName.GeneratedMSBuildEditorConfig.editorconfig
+│   │   ├── ProjectName.AssemblyInfo.cs      # Auto-generated assembly info
+│   │   ├── ProjectName.csproj.FileListAbsolute.txt
+│   │   ├── ProjectName.dll                  # Temporary build artifact
+│   │   └── *.cache / *.g.cs files           # Auto-generated code (Razor, resources)
+│   │
+│   └── Release/net6.0/
+│       └── (same structure as Debug, but optimized build)
+```
+
+---
+
+## 7. 🧾 **Notes on DLLs (to understand easier)**
+
+* **`ProjectName.dll`** → The **main application logic** (Controllers, Models, Services, etc.).
+* **`ProjectName.Views.dll`** → Contains **precompiled Razor Views** (so views are faster at runtime).
+* **`ProjectName.pdb`** → Debugging symbols (helps map runtime errors back to source code).
+* **`*.deps.json`** → Lists **all referenced DLLs** and dependencies (like a manifest).
+* **`*.runtimeconfig.json`** → Tells .NET which **runtime & settings** are required.
+* **External NuGet DLLs** (e.g., `Microsoft.EntityFrameworkCore.dll`, `Newtonsoft.Json.dll`) are placed in the same output folder.
+* **Debug vs Release**:
+
+  * `Debug` → includes `.pdb` for debugging.
+  * `Release` → optimized, usually no `.pdb` unless explicitly configured.
