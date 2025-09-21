@@ -187,3 +187,71 @@ Response → sent back to User
   </c:forEach>
   ```
 * Unlike Spring Boot, you **must configure `web.xml`** (unless you use `@WebServlet` annotations).
+
+---
+
+## 6. 🏗️ **Compiled Output (Build Artifacts)**
+
+When you build the project with **Maven/Gradle**, the compiled bytecode and packaged artifacts go inside the **`target/`** folder.
+
+### 📂 **target/** (Maven build output)
+
+```
+project-name/
+│
+├── target/
+│   ├── classes/                     # Compiled .class files (main code)
+│   │   └── com/example/project/
+│   │       ├── controller/UserServlet.class
+│   │       ├── model/User.class
+│   │       ├── dao/UserDao.class
+│   │       └── util/DBUtil.class
+│   │
+│   ├── test-classes/                # Compiled test .class files
+│   │   └── com/example/project/UserServletTest.class
+│   │
+│   ├── project-name-1.0-SNAPSHOT/   # Exploded WAR directory (before packaging)
+│   │   ├── index.jsp
+│   │   ├── css/style.css
+│   │   ├── js/script.js
+│   │   └── WEB-INF/
+│   │       ├── web.xml
+│   │       ├── lib/                 # Dependencies copied here
+│   │       │   ├── servlet-api.jar
+│   │       │   ├── mysql-connector.jar
+│   │       │   └── jstl.jar
+│   │       └── classes/             # Same compiled classes as above
+│   │
+│   ├── project-name-1.0-SNAPSHOT.war   # Final deployable WAR
+│   └── project-name-1.0-SNAPSHOT.jar   # If packaged as JAR (for utilities/libs)
+```
+
+---
+
+## 7. 🧾 **Notes on JAR/WARs**
+
+* **`.class` files** → Output of Java compilation (`javac`). Each `.java` → `.class`.
+* **`project-name-1.0-SNAPSHOT.jar`** → A **library JAR** (used if your project is a library, not a web app).
+
+  * Contains only classes/resources.
+  * Cannot be directly deployed to a server like Tomcat.
+* **`project-name-1.0-SNAPSHOT.war`** → A **Web Application Archive** (for Tomcat, Jetty, etc.).
+
+  * Internally structured like a mini web project:
+
+    ```
+    WEB-INF/
+      classes/   # Compiled classes
+      lib/       # Dependencies
+      web.xml    # Config
+    ```
+  * Deploy this `.war` into `tomcat/webapps/` and Tomcat auto-expands it.
+* **`WEB-INF/lib/*.jar`** → External libraries needed at runtime.
+* **Debug vs Release analogy** (Maven profiles):
+
+  * `mvn clean install -Pdev` → Dev build (extra logging, snapshot deps).
+  * `mvn clean install -Pprod` → Prod build (optimized, minified static files).
+
+---
+
+👉 This way, the **source folders (`controller/`, `model/`, `dao/`, `util/`)** compile into `.class` files → bundled into **JARs** or **WARs** → then deployed on a servlet container.
