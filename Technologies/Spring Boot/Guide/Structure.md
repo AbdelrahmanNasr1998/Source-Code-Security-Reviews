@@ -159,3 +159,90 @@ Controller → returns JSON (REST API) or View (Thymeleaf)
       ↓
 Response → sent back to User
 ```
+
+---
+
+## 6. 🏗️ **Compiled Output (Build Artifacts)**
+
+When you run:
+
+```bash
+mvn clean package
+```
+
+or
+
+```bash
+gradle build
+```
+
+Spring Boot creates a **fat JAR** (also called *Uber JAR*) inside the **`target/`** folder.
+
+### 📂 **target/** (Spring Boot build output)
+
+```
+project-name/
+│
+├── target/
+│   ├── classes/                         # Compiled .class files
+│   │   └── com/example/project/
+│   │       ├── ProjectApplication.class
+│   │       ├── controller/UserController.class
+│   │       ├── service/UserService.class
+│   │       ├── repository/UserRepository.class
+│   │       ├── model/User.class
+│   │       └── util/DateUtils.class
+│   │
+│   ├── test-classes/                    # Compiled test classes
+│   │   └── com/example/project/
+│   │       └── ProjectApplicationTests.class
+│   │
+│   ├── project-name-0.0.1-SNAPSHOT.jar  # Final fat JAR (deployable & runnable)
+│   ├── project-name-0.0.1-SNAPSHOT.jar.original  # Before Spring Boot repackaging
+│   └── maven-archiver/                  # Build metadata
+│       └── pom.properties
+```
+
+---
+
+## 7. 📦 **Inside the Spring Boot JAR**
+
+Spring Boot’s fat JAR is self-contained (you can run it directly with `java -jar project-name.jar`).
+If you unzip it, the structure looks like this:
+
+```
+project-name-0.0.1-SNAPSHOT.jar
+│
+├── BOOT-INF/
+│   ├── classes/             # Your compiled classes (controllers, services, etc.)
+│   │   └── com/example/project/...
+│   │
+│   ├── lib/                 # All dependencies (Spring Boot, MySQL driver, etc.)
+│   │   ├── spring-boot-starter-web-3.1.0.jar
+│   │   ├── spring-data-jpa-3.1.0.jar
+│   │   ├── mysql-connector-j-8.0.33.jar
+│   │   └── ...
+│   │
+│   └── META-INF/
+│       └── MANIFEST.MF      # Metadata (main class, build info)
+│
+└── org/springframework/boot/loader/  # Spring Boot launcher classes
+```
+
+---
+
+## 8. 🧾 **Notes on Spring Boot JARs**
+
+* **`project-name-0.0.1-SNAPSHOT.jar`** → The **fat JAR** (contains everything to run app).
+* **`BOOT-INF/classes/`** → Your project’s compiled code (`controller/`, `service/`, etc.).
+* **`BOOT-INF/lib/`** → Dependencies (Spring, Hibernate, DB drivers, etc.).
+* **`org.springframework.boot.loader`** → The special **Spring Boot launcher** that makes the fat JAR executable.
+* **`.jar.original`** → A plain JAR without Spring Boot packaging (generated first, then repackaged).
+* Unlike traditional WAR files:
+
+  * Spring Boot embeds Tomcat/Jetty/Undertow inside the JAR.
+  * You can run `java -jar project-name.jar` without needing to deploy to an external server.
+
+---
+
+👉 This way, your **source folders (`controller/`, `service/`, `repository/`, etc.)** map directly into **`BOOT-INF/classes/`**, while dependencies go into **`BOOT-INF/lib/`**, making the JAR completely self-contained.
