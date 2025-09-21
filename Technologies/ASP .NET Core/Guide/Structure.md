@@ -214,7 +214,7 @@ ProjectName/
 
 ---
 
-## 7. 🧾 **Notes on DLLs (to understand easier)**
+## 7. 🧾 **Notes on DLLs**
 
 * **`ProjectName.dll`** → The **main application logic** (Controllers, Models, Services, etc.).
 * **`ProjectName.Views.dll`** → Contains **precompiled Razor Views** (so views are faster at runtime).
