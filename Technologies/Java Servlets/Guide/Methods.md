@@ -8,7 +8,6 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // GET /api/user?city=Cairo
-        // req. or request.
         String city = req.getParameter("city"); // query string param
         if (city == null) city = "Guest";
 
@@ -26,7 +25,6 @@ public class UserByIdServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // GET /api/user/123
-        // req. or request.
         String pathInfo = req.getPathInfo(); // "/123"
         int id = Integer.parseInt(pathInfo.substring(1));
 
@@ -71,7 +69,6 @@ public class PostFormServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // POST form-data (application/x-www-form-urlencoded)
-        // req. or request.
         String name = req.getParameter("name");
 
         resp.setContentType("application/json");
@@ -90,7 +87,6 @@ public class PutUserServlet extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // GET id from path
-        // req. or request.
         String pathInfo = req.getPathInfo(); // "/5"
         int id = Integer.parseInt(pathInfo.substring(1));
 
@@ -116,7 +112,6 @@ public class PatchUserServlet extends HttpServlet {
     @Override
     protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // PATCH requires HttpServlet 3.1+ or override service()
-        // req. or request.
         String pathInfo = req.getPathInfo(); // "/7"
         int id = Integer.parseInt(pathInfo.substring(1));
 
@@ -140,7 +135,6 @@ public class PatchUserServlet extends HttpServlet {
 public class DeleteUserServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        // req. or request.
         String pathInfo = req.getPathInfo(); // "/10"
         int id = Integer.parseInt(pathInfo.substring(1));
 
@@ -162,7 +156,6 @@ public class DeleteUserServlet extends HttpServlet {
 public class UploadSingleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        // req. or request.
         Part filePart = req.getPart("file"); // input name="file"
         String fileName = filePart.getSubmittedFileName();
         long size = filePart.getSize();
@@ -181,7 +174,6 @@ public class UploadSingleServlet extends HttpServlet {
 public class UploadMultipleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        // req. or request.
         Collection<Part> parts = req.getParts(); // input name="files"
         StringBuilder result = new StringBuilder("[");
         for (Part p : parts) {
@@ -214,7 +206,6 @@ public class UploadMultipleServlet extends HttpServlet {
 
 ✅ **Request Sources**
 
-* 'req. or request.'
 * `req.getParameter("name")` → query string or form data
 * `req.getPathInfo()` → path variable (`/user/{id}`)
 * `req.getReader()` / `req.getInputStream()` → JSON body
@@ -230,6 +221,5 @@ public class UploadMultipleServlet extends HttpServlet {
 
 ✅ **Files**
 
-* 'req. or request.'
 * Single → `req.getPart("file")`
 * Multiple → `req.getParts()`
