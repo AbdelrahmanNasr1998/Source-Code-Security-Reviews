@@ -17,6 +17,8 @@
 ## 🔹 2. Configuration
 
 * SQLite does **not have a global config file**.
+* SQLite has no global query logging.
+* Use triggers or application-level logging per database file.
 * Settings are applied **per connection** using PRAGMA commands:
 
 ```sql
